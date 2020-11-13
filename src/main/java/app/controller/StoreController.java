@@ -10,6 +10,4 @@ public class StoreController {
     public String index(){
         return "hello";
     }
-
-    @RequestMapping(value = "/login", method = =)
 }
