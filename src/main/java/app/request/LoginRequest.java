@@ -1,6 +1,6 @@
 package app.request;
 
-public class RequestLogin {
+public class LoginRequest {
 
     private String username;
     private String password;

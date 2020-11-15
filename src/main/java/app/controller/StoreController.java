@@ -1,9 +1,9 @@
 package app.controller;
 
-import app.common.Validate;
+import app.common.ValidateUtils;
 import app.error.LoginError;
-import app.reponse.ResponseLogin;
-import app.request.RequestLogin;
+import app.reponse.LoginResponse;
+import app.request.LoginRequest;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +20,23 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody RequestLogin requestLogin) {
+    public String login(@RequestBody LoginRequest requestLogin) {
 
-        ResponseLogin response = new ResponseLogin();
+        LoginResponse response = new LoginResponse();
 
         if (StringUtils.isBlank(requestLogin.getUsername()) || StringUtils.isBlank(requestLogin.getPassword())) {
             response.setResponseCode(HttpStatus.SC_ACCEPTED);
-            response.addError(new LoginError(LoginError.EMAIL_REQUIRED_ERROR_CODE,LoginError.INTERNAL_SERVER_ERROR_MSG, StringUtils.EMPTY));
+            response.addError(new LoginError(LoginError.EMAIL_REQUIRED_ERROR_CODE, LoginError.INTERNAL_SERVER_ERROR_MSG, StringUtils.EMPTY));
             return gson.toJson(response);
         }
 
         System.out.println(requestLogin.getUsername());
 
-        if(Validate.validateEmail(requestLogin.getUsername())){
+        if (ValidateUtils.validEmail(requestLogin.getUsername())) {
             return "valadate email";
         }
 
-        if(!requestLogin.getUsername().equals("thinh@gmail.com") || !requestLogin.getPassword().equals("thinh")){
+        if (!requestLogin.getUsername().equals("thinh@gmail.com") || !requestLogin.getPassword().equals("thinh")) {
             return "Email Or Password Is Not Available";
         }
 

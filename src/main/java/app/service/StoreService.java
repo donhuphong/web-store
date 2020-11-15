@@ -1,7 +1,7 @@
 package app.service;
 
-import app.request.RequestLogin;
+import app.request.LoginRequest;
 
 public interface StoreService {
-    public String login(RequestLogin requestLogin);
+    public String login(LoginRequest requestLogin);
 }

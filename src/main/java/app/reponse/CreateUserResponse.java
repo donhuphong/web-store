@@ -5,7 +5,7 @@ import app.error.LoginError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResponseLogin {
+public class CreateUserResponse {
     private int responseCode = 200;
     private List<Error> errors = new ArrayList<Error>();
 
