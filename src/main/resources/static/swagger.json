@@ -2,172 +2,443 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "API Document for Web-Store",
-    "termsOfService": "http://swagger.io/terms/",
+    "title": "Authentication",
     "contact": {
-      "email": "apiteam@swagger.io"
+      "email": "jara@jara-company.com"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "petstore.swagger.io",
-  "basePath": "/v2",
+  "host": "localhost:8089",
+  "basePath": "/api",
   "tags": [
     {
+      "name": "login",
+      "description": "login in system"
+    },
+    {
+      "name": "admin",
+      "description": "admin manager system"
+    },
+    {
       "name": "user",
-      "description": "Operations about user"
-
+      "description": "user in system"
     }
   ],
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "paths": {
-    "/user/login": {
-      "get": {
+    "/login": {
+      "post": {
         "tags": [
-          "user"
+          "login"
         ],
-        "summary": "Logs user into the system",
-        "description": "",
-        "operationId": "loginUser",
+        "summary": "Login syestem",
+        "description": "check account when login in system\n",
+        "operationId": "loginSystem",
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "Created user object",
+            "name": "username",
+            "in": "query",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Login"
-            }
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
-        ] ,
+        ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "response from backend when login success",
             "schema": {
-              "$ref": "#/definitions/Response"
-            },
-            "headers": {
-              "X-Rate-Limit": {
-                "type": "integer",
-                "format": "int32",
-                "description": "calls per hour allowed by the user"
-              },
-              "X-Expires-After": {
-                "type": "string",
-                "format": "date-time",
-                "description": "date in UTC when token expires"
+              "$ref": "#/definitions/ResponseLogin"
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/change-password-user": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Change password in system",
+        "description": "Change password in system\n",
+        "operationId": "changePassword",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "confirmPassword",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response from backend when login success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resultCode": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Change password success"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {}
+                }
               }
             }
           },
           "400": {
-            "description": "Invalid username/password supplied"
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/admin/get-user": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "get user in system",
+        "description": "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId": "getUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response from backend when get user success",
+            "schema": {
+              "$ref": "#/definitions/ResponseUser"
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/admin/get-all-user": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "get all user in system",
+        "description": "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId": "getAllUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "schema": {
+              "$ref": "#/definitions/ResponseAllUser"
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/user/create": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "create user",
+        "description": "create user info\n",
+        "operationId": "creatUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fullName",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response info user",
+            "schema": {
+              "$ref": "#/definitions/ResponseUser"
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/user/get-user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get info user in system",
+        "description": "get user info\n",
+        "operationId": "get user info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response info user",
+            "schema": {
+              "$ref": "#/definitions/ResponseUser"
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
           }
         }
       }
     }
   },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    }
-  },
   "definitions": {
-    "Login": {
+    "User": {
       "type": "object",
       "properties": {
         "username": {
-          "type": "string"
+          "type": "string",
+          "example": "phongchodien"
         },
-        "password": {
-          "type": "string"
+        "email": {
+          "type": "string",
+          "example": "phongchodien@gmail.com"
+        },
+        "fullName": {
+          "type": "string",
+          "example": "Phong Chó Điên"
+        },
+        "numberPhone": {
+          "type": "string",
+          "example": "0777091855"
+        },
+        "gender": {
+          "type": "string",
+          "example": "male"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "example": "06/12/1997"
         }
       }
     },
-    "Response": {
+    "ResponseLogin": {
       "type": "object",
       "properties": {
         "resultCode": {
           "type": "integer",
-          "format": "int32",
-          "default": 200
+          "format": "int64"
         },
-        "messageCode": {
+        "msg": {
           "type": "string",
-          "default": "Login Success !"
+          "example": "Login Success"
         },
         "body": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "example": "phongchodien"
+            },
+            "email": {
+              "type": "string",
+              "example": "phongchodien@gmail.com"
+            },
+            "token": {
+              "type": "string",
+              "example": "JL4fHYWjxQ49HQzk8V6mSV2XrMb9RmGGkf6qAbr7A3pdQL8jdyagXT7sfqEYn7eeEBMajGh9Wsa8LmCuFtckGk4xyLE4NFMpt5wA"
+            },
+            "fullName": {
+              "type": "string",
+              "example": "Lươn Như Phong"
+            }
+          }
         }
       }
     },
-    "User": {
+    "ResponseUser": {
       "type": "object",
       "properties": {
-        "id": {
+        "resultCode": {
           "type": "integer",
           "format": "int64"
         },
-        "username": {
-          "type": "string"
+        "msg": {
+          "type": "string",
+          "example": "Login Success"
         },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "userStatus": {
-          "type": "integer",
-          "format": "int32",
-          "description": "User Status"
+        "body": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "example": "phongchodien"
+            },
+            "email": {
+              "type": "string",
+              "example": "phongchodien@gmail.com"
+            },
+            "fullName": {
+              "type": "string",
+              "example": "Lươn Như Phong"
+            },
+            "numberPhone": {
+              "type": "string",
+              "example": "+84964129341"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male"
+            },
+            "dateOfBirth": {
+              "type": "string",
+              "example": "06/12/1997"
+            }
+          }
         }
-      },
-      "xml": {
-        "name": "User"
       }
     },
-    "Tag": {
+    "ResponseAllUser": {
       "type": "object",
       "properties": {
-        "id": {
+        "resultCode": {
           "type": "integer",
           "format": "int64"
         },
-        "name": {
-          "type": "string"
+        "msg": {
+          "type": "string",
+          "example": "Login Success"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
         }
-      },
-      "xml": {
-        "name": "Tag"
       }
     }
   }
