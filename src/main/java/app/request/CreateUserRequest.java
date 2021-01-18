@@ -1,42 +1,32 @@
 package app.request;
 
-import app.common.GSonUtils;
-import com.google.gson.Gson;
-
-import javax.swing.*;
-import java.util.Date;
-
-public class CreateUserRequest extends GSonUtils<CreateUserRequest> {
-    private String userName;
-    private int age;
-    private String gender;
+public class CreateUserRequest {
+    private String token;
     private String email;
+    private String name;
     private String password;
-    private int phoneNumber;
-    private String address;
+    private String fullName;
+    private String gender;
+    private String numberPhone;
+    private String role;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
+    public CreateUserRequest(String token, String email, String name, String password, String fullName, String gender, String phone, String role) {
+        this.token = token;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.fullName = fullName;
         this.gender = gender;
+        this.numberPhone = phone;
+        this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getEmail() {
@@ -47,6 +37,14 @@ public class CreateUserRequest extends GSonUtils<CreateUserRequest> {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -55,31 +53,35 @@ public class CreateUserRequest extends GSonUtils<CreateUserRequest> {
         this.password = password;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getGender() {
+        return gender;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public CreateUserRequest(){}
-
-    public CreateUserRequest(String userName, int age, String gender, String email, String password, int phoneNumber, String address) {
-        this.userName = userName;
-        this.age = age;
+    public void setGender(String gender) {
         this.gender = gender;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+    }
+
+    public String getNumberPhone() {
+        return numberPhone;
+    }
+
+    public void setNumberPhone(String numberPhone) {
+        this.numberPhone = numberPhone;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

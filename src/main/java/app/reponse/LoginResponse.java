@@ -1,37 +1,53 @@
 package app.reponse;
 
-import app.error.LoginError;
+import app.common.GSonUtils;
+import app.request.CreateUserRequest;
 
-import java.util.ArrayList;
-import java.util.List;
+public class LoginResponse extends GSonUtils<LoginResponse> {
+    private String userName;
+    private String email;
+    private String token;
+    private String fullName;
 
-public class LoginResponse {
-    private int responseCode = 200;
-    private List<Error> errors = new ArrayList<Error>();
-
-    public int getResponseCode() {
-        return responseCode;
+    public LoginResponse(String userName, String email, String token, String fullName) {
+        this.userName = userName;
+        this.email = email;
+        this.token = token;
+        this.fullName = fullName;
     }
 
-    public void setResponseCode(int responseCode) {
-        this.responseCode = responseCode;
+    public LoginResponse() {
     }
 
-    public List<Error> getErrors() {
-        return errors;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setErrors(List<Error> errors) {
-        this.errors = errors;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void addError(LoginError error) {
-        if (error != null) {
-            this.errors.add(error);
-        }
+    public String getEmail() {
+        return email;
     }
 
-    public boolean hasErrors() {
-        return !this.errors.isEmpty();
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

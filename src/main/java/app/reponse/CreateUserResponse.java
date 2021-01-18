@@ -1,37 +1,72 @@
 package app.reponse;
 
-import app.error.LoginError;
+import app.common.GSonUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CreateUserResponse extends GSonUtils<CreateUserResponse> {
+    private String userName;
+    private String email;
+    private String fullName;
+    private String numberPhone;
+    private String gender;
+    private String dayOfBirth;
 
-public class CreateUserResponse {
-    private int responseCode = 200;
-    private List<Error> errors = new ArrayList<Error>();
-
-    public int getResponseCode() {
-        return responseCode;
+    public CreateUserResponse() {
     }
 
-    public void setResponseCode(int responseCode) {
-        this.responseCode = responseCode;
+    public CreateUserResponse(String userName, String email, String fullName, String numberPhone, String gender, String dayOfBirth) {
+        this.userName = userName;
+        this.email = email;
+        this.fullName = fullName;
+        this.numberPhone = numberPhone;
+        this.gender = gender;
+        this.dayOfBirth = dayOfBirth;
     }
 
-    public List<Error> getErrors() {
-        return errors;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setErrors(List<Error> errors) {
-        this.errors = errors;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void addError(LoginError error) {
-        if (error != null) {
-            this.errors.add(error);
-        }
+    public String getEmail() {
+        return email;
     }
 
-    public boolean hasErrors() {
-        return !this.errors.isEmpty();
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getNumberPhone() {
+        return numberPhone;
+    }
+
+    public void setNumberPhone(String numberPhone) {
+        this.numberPhone = numberPhone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(String dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
     }
 }
